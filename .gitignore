@@ -1,0 +1,29 @@
+# build output
+.libs
+.deps
+.dirstamp
+*.o
+*.o.??????
+*.a
+*.lo
+*.la
+*.in
+
+# configure/autotools output
+aclocal.m4
+ar-lib
+autom4te.cache
+compile
+config.*
+configure
+depcomp
+doxygen
+doxygen.log
+Doxyfile
+install-sh
+libtool
+ltmain.sh
+m4/
+Makefile
+missing
+stamp-h1
