@@ -1,6 +1,4 @@
-
-
-AC_INIT([libusbmux], [1.0.1], [processor.tools.support@analog.com])
+AC_INIT([libusbmux], [1.0.3], [processor.tools.support@analog.com])
 
 AC_PROG_CC
 AC_CONFIG_HEADERS([config.h])

@@ -1,0 +1,128 @@
+/* Generated from MVC++ 5.0 "Insert Resource|Version",
+ * then edited to use Symbols rather than literal strings*/ 
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+
+#include <winver.h>
+#if ((defined _DEBUG) && (defined QA))
+#if !defined SPECIAL_BUILD
+#define SPECIAL_BUILD "QA Debug Build\0"
+#endif
+#if !defined COMMENTS
+#define COMMENTS "QA Debug Build\0"
+#endif
+#endif
+
+#if !defined PRIVATE_BUILD
+#define PRIVATE_BUILD "Engineering Build\0"
+#endif
+
+#if !defined QA
+#if !defined _DEBUG
+#if !defined COMMENTS
+#define COMMENTS "Engineering Build\0"
+#endif
+#else /* _DEBUG */
+#if !defined COMMENTS
+#define COMMENTS "Engineering Debug-mode Build\0"
+#endif
+#endif /* !DEBUG/else */
+#endif /* QA */
+
+#define VIS_PREREL VS_FF_PRERELEASE
+
+#ifdef DEBUG
+#define VIS_DEBUG VS_FF_DEBUG
+#else
+#define VIS_DEBUG 0x0
+#endif
+
+#ifdef SPECIAL_BUILD
+#define VIS_SPEC VS_FF_SPECIALBUILD
+#else
+#define VIS_SPEC 0x0 
+#endif
+
+#ifdef PRIVATE_BUILD
+#define VIS_PRIV VS_FF_PRIVATEBUILD
+#else
+#define VIS_PRIV 0x0
+#endif
+#define FILE_FLAGS (VIS_PREREL | VIS_DEBUG | VIS_SPEC | VIS_PRIV)
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION ADI_FILE_MAJOR,ADI_FILE_MINOR,ADI_FILE_PATCH,ADI_FILE_REL
+ PRODUCTVERSION ADI_PROD_MAJOR,ADI_PROD_MINOR,ADI_PROD_PATCH,ADI_PROD_REL
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS FILE_FLAGS
+#else
+ FILEFLAGS FILE_FLAGS
+#endif
+ FILEOS 0x40004L
+#if (ADI_FILETYPE == ADI_FTYPE_APP)
+ FILETYPE VFT_APP
+ FILESUBTYPE 0x0L
+ #elif (ADI_FILETYPE == ADI_FTYPE_DLL)
+ FILETYPE VFT_DLL
+ FILESUBTYPE 0x0L
+ #elif (ADI_FILETYPE == ADI_FTYPE_DRV)
+ FILETYPE VFT_DRV
+ FILESUBTYPE VFT2_DRV_INSTALLABLE
+ #else
+ FILETYPE VFT_UNKNOWN
+ FILESUBTYPE 0x0L
+ #endif
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+#if defined COMMENTS
+            VALUE "Comments", COMMENTS
+#endif
+            VALUE "CompanyName", COMPANY_NAME
+            VALUE "FileDescription", EXE_DESCRIPTION
+            VALUE "FileVersion", EXE_VERSION
+            VALUE "InternalName", EXE_NAME
+            VALUE "LegalCopyright", COPYRIGHT
+#if defined LEGAL_TRADEMARKS
+            VALUE "LegalTrademarks", LEGAL_TRADEMARKS
+#endif
+            VALUE "OriginalFilename", EXE_FILENAME
+#if defined PRIVATE_BUILD
+			VALUE "PrivateBuild", PRIVATE_BUILD
+#endif 
+            VALUE "ProductName", PRODUCT_NAME
+            VALUE "ProductVersion", PROD_VERSION
+
+#if defined SPECIAL_BUILD
+            VALUE "SpecialBuild", SPECIAL_BUILD
+#endif
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+

@@ -1,3 +1,27 @@
-#include "release_version.h"
+/**
+ * Copyright (c) 2021-2022 Analog Devices, Inc. All Rights Reserved. This
+ * software is proprietary and confidential to Analog Devices, Inc. and its
+ * licensors.
+ */
+
 #include "version.h"
+
+// used to set/check ADI_FILETYPE macro
+#define ADI_FTYPE_APP 1 /* .exe target */
+#define ADI_FTYPE_DLL 2 /* .dll target */
+#define ADI_FTYPE_DRV 3 /* .? target */
+
+#define COPYRIGHT "Copyright (c) 2021-2022\0"
+
+#define ADI_PROD_MAJOR	1
+#define ADI_PROD_MINOR	0
+#define ADI_PROD_PATCH	0
+#define ADI_PROD_REL	0
+#define PRODUCT_NAME	"USB MUX\0"
+
+#define COMPANY_NAME	"Analog Devices, Inc.\0"
+
+/* do not modify the following */
+#define PROD_VERSION ADI_VERSION_CONV(ADI_PROD_MAJOR,ADI_PROD_MINOR,ADI_PROD_PATCH,ADI_PROD_REL)
+
 #include "tool_version.rc2"

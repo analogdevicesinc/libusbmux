@@ -1,0 +1,119 @@
+<!-- ===================================================================== -->
+<!-- Used to build USB MUX library                                         -->
+<!-- ===================================================================== -->
+
+<project name="libusbmux" default="build">
+    <!-- 
+    ======================================================================
+    determine os and load os-specific settings
+    ====================================================================== 
+    -->
+    <condition property="windows">
+        <os family="windows" />
+    </condition>
+
+    <condition property="linux">
+        <and>
+            <os family="unix" />
+            <not>
+                <os family="mac"/>
+            </not>
+        </and>
+    </condition>
+
+    <condition property="mac">
+        <os family="mac" />
+    </condition>
+
+    <!-- 
+    ======================================================================
+    import/set other properties
+    ====================================================================== 
+    -->
+    <property environment="env"/>
+
+    <import file="${env.AUTOBUILD_HOME}/autobuild.properties.xml"/>
+    <import><url url="https://ctse-team.ad.analog.com/eclipse/build/autobuild.properties.xml"/></import>	
+
+    <property name="artifacts" 	location="./Artifacts"/>
+    <property name="builddir" 	location="${basedir}/build"/>
+
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+    <!--
+    ======================================================================
+    clean: cleans all intermediate files
+    ====================================================================== 
+    -->
+    <target name="clean">
+        <delete dir="${artifacts}"/>
+        <delete includeemptydirs="true">
+            <fileset dir="${builddir}">
+                <include name="**/*"/>
+                <exclude name=".gitignore"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <!--
+    ======================================================================
+    build the library in release configuration for Windows
+    ====================================================================== 
+    -->
+    <target name="build-windows" if="windows">
+        <exec executable="cmake" failonerror="true" taskname="cmake" dir="${builddir}">
+            <arg line=".. -G &quot;Visual Studio 14 2015&quot;"/>
+        </exec>
+
+        <!-- build it -->
+        <exec executable="cmake" failonerror="true" taskname="cmake" dir="${builddir}">
+            <arg line="--build . --config Release"/>
+        </exec>
+        <copy file="${basedir}/inc/usbmux.h" tofile="${artifacts}/inc/usbmux.h"/>
+        <copy file="${basedir}/inc/usbmux.h" tofile="${basedir}/lib/inc/usbmux.h"/>
+        <copy file="${builddir}/Release/libusbmux.lib" tofile="${artifacts}/lib/libusbmux.lib"/>
+        <copy file="${builddir}/Release/libusbmux.lib" tofile="${basedir}/lib/libusbmux.lib"/>
+        <copy file="${builddir}/Release/libusbmux.dll" tofile="${artifacts}/libusbmux.dll"/>
+
+        <zip destfile="${artifacts}/libusbmux.zip" basedir="${artifacts}"/>
+    </target>
+
+    <!--
+    ======================================================================
+    build the shared library and copy it to the Artifacts folder
+    ====================================================================== 
+    -->
+    <target name="build" depends="clean, build-windows"/>
+
+    <!--
+    ======================================================================
+    deploy: copies the artifacts to the specified staging directories
+    ======================================================================
+    -->
+    <condition property="can-deploy">
+        <and>
+            <isset property="env.RELEASE"/>
+            <isset property="env.VERSION"/>
+            <isset property="env.BUILD_ID"/>
+            <isset property="env.JOB_NAME"/>
+        </and>
+    </condition>
+    <target name="deploy" depends="build" if="can-deploy">
+        <!-- Copy the output to the stage area -->
+        <sshexec
+            host="${buildmgr.sshhost}"
+            username="${buildmgr.sshuser}"
+            password="${buildmgr.sshpass}"
+            command="mkdir -p ${buildmgr.sshpath}/${env.RELEASE}/System"
+            failonerror="false"
+            trust="true"/>
+
+        <scp todir="${buildmgr.sshuser}:${buildmgr.sshpass}@${buildmgr.sshhost}:${buildmgr.sshpath}/${env.RELEASE}/System"
+            trust="true">
+            <fileset dir="${artifacts}">
+                <include name="**/libusbmux.dll"/>
+            </fileset>
+        </scp>
+    </target>
+
+</project>
